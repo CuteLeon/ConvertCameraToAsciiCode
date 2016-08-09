@@ -1,0 +1,2 @@
+# ConvertCameraToAsciiCode
+把摄像头的实时画面转换为Ascii码
