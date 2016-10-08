@@ -40,13 +40,11 @@ Public Class ConvertCameraToAsciiForm
     Private Function BitmapToAscii(ByVal GrayScaleBitmap As Bitmap, ByVal CellSize As Size) As String
         Dim AsciiString As String = vbNullString
         Dim IndexX, IndexY As Integer
-        Dim CellBitmap As Bitmap
+        Dim CellBitmap As Bitmap = New Bitmap(GrayScaleBitmap, GrayScaleBitmap.Width / CellSize.Width, GrayScaleBitmap.Height / CellSize.Height)
         Dim CellGrayScale As Byte
-        For IndexY = 0 To GrayScaleBitmap.Height - 1 - CellSize.Height Step CellSize.Height
-            For IndexX = 0 To GrayScaleBitmap.Width - 1 - CellSize.Width Step CellSize.Width
-                CellBitmap = GrayScaleBitmap.Clone(New Rectangle(IndexX, IndexY, CellSize.Width, CellSize.Height), Imaging.PixelFormat.Format32bppArgb)
-                CellBitmap = New Bitmap(CellBitmap, 1, 1)
-                CellGrayScale = 255 - CellBitmap.GetPixel(0, 0).R
+        For IndexY = 0 To CellBitmap.Height - 1
+            For IndexX = 0 To CellBitmap.Width - 1
+                CellGrayScale = 255 - CellBitmap.GetPixel(IndexX, IndexY).R
                 AsciiString &= AsciiFromGrayScale(CellGrayScale)
             Next
             AsciiString &= vbCrLf
